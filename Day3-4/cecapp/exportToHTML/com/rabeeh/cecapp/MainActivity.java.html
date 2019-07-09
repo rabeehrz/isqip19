@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.rabeeh.cecapp</span><span class="s0">;</span>
+
+import <span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+import <span class="s1">android.os.AsyncTask</span><span class="s0">;</span>
+import <span class="s1">android.os.Bundle</span><span class="s0">;</span>
+import <span class="s1">android.view.View</span><span class="s0">;</span>
+import <span class="s1">android.widget.Button</span><span class="s0">;</span>
+import <span class="s1">android.widget.EditText</span><span class="s0">;</span>
+import <span class="s1">android.widget.TextView</span><span class="s0">;</span>
+import <span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+public class <span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+    EditText etFirst<span class="s0">, </span><span class="s1">etSecond</span><span class="s0">;</span>
+    <span class="s1">Button btnAdd</span><span class="s0">, </span><span class="s1">btnMinus</span><span class="s0">, </span><span class="s1">btnMultiply</span><span class="s0">, </span><span class="s1">btnDivide</span><span class="s0">, </span><span class="s1">btnClear</span><span class="s0">;</span>
+    <span class="s1">TextView tvResult</span><span class="s0">;</span>
+    int <span class="s1">a</span><span class="s0">, </span><span class="s1">b</span><span class="s0">, </span><span class="s1">c</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_main)</span><span class="s0">;</span>
+
+        <span class="s1">etFirst = findViewById(R.id.et_first)</span><span class="s0">;</span>
+        <span class="s1">etSecond = findViewById(R.id.et_second)</span><span class="s0">;</span>
+
+        <span class="s1">btnAdd = findViewById(R.id.btn_add)</span><span class="s0">;</span>
+        <span class="s1">btnMinus = findViewById(R.id.btn_minus)</span><span class="s0">;</span>
+        <span class="s1">btnMultiply = findViewById(R.id.btn_multiply)</span><span class="s0">;</span>
+        <span class="s1">btnDivide = findViewById(R.id.btn_divide)</span><span class="s0">;</span>
+        <span class="s1">btnClear = findViewById(R.id.btn_clear)</span><span class="s0">;</span>
+
+        <span class="s1">tvResult = findViewById(R.id.tv_result)</span><span class="s0">;</span>
+
+        <span class="s1">btnAdd.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            @Override
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    <span class="s0">new </span><span class="s1">AddTask().execute()</span><span class="s0">;</span>
+<span class="s2">//                    a = Integer.parseInt(etFirst.getText().toString());</span>
+//                    b = Integer.parseInt(etSecond.getText().toString());
+//                    c = add(a,b);
+//                    tvResult.setText(Integer.toString(c));
+                <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+                    showErrorToast(<span class="s3">&quot;Enter a number&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+
+            }
+        })<span class="s0">;</span>
+        <span class="s1">btnMinus.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            @Override
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    a = Integer.parseInt(etFirst.getText().toString())<span class="s0">;</span>
+                    <span class="s1">b = Integer.parseInt(etSecond.getText().toString())</span><span class="s0">;</span>
+                    <span class="s1">tvResult.setText(Integer.toString(a - b))</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+                    showErrorToast(<span class="s3">&quot;Enter a number&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            }
+        })<span class="s0">;</span>
+        <span class="s1">btnMultiply.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            @Override
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    a = Integer.parseInt(etFirst.getText().toString())<span class="s0">;</span>
+                    <span class="s1">b = Integer.parseInt(etSecond.getText().toString())</span><span class="s0">;</span>
+                    <span class="s1">tvResult.setText(Integer.toString(a * b))</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+                    showErrorToast(<span class="s3">&quot;Enter a number&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            }
+        })<span class="s0">;</span>
+        <span class="s1">btnDivide.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            @Override
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    a = Integer.parseInt(etFirst.getText().toString())<span class="s0">;</span>
+                    <span class="s1">b = Integer.parseInt(etSecond.getText().toString())</span><span class="s0">;</span>
+                    if <span class="s1">(b == </span><span class="s4">0</span><span class="s1">) {</span>
+                        showErrorToast(<span class="s3">&quot;Division by 0 is not possible&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                        tvResult.setText(Integer.toString(a / b))<span class="s0">;</span>
+                    <span class="s1">}</span>
+                } <span class="s0">catch </span><span class="s1">(Exception e) {</span>
+                    showErrorToast(<span class="s3">&quot;Enter a number&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            }
+        })<span class="s0">;</span>
+        <span class="s1">btnClear.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            @Override
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+                etFirst.setText(<span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">etSecond.setText(</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">tvResult.setText(</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">showErrorToast(</span><span class="s3">&quot;Cleared!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        })<span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">showErrorToast(String text) {</span>
+        Toast.makeText(<span class="s0">this, </span><span class="s1">text</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">add(</span><span class="s0">int </span><span class="s1">a</span><span class="s0">, int </span><span class="s1">b) {</span>
+        <span class="s0">return </span><span class="s1">a + b</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">class </span><span class="s1">AddTask </span><span class="s0">extends </span><span class="s1">AsyncTask {</span>
+        @Override
+        <span class="s0">protected void </span><span class="s1">onPreExecute() {</span>
+            <span class="s0">super</span><span class="s1">.onPreExecute()</span><span class="s0">;</span>
+            <span class="s1">tvResult.setText(</span><span class="s3">&quot;Please Wait!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        @Override
+        <span class="s0">protected </span><span class="s1">Object doInBackground(Object[] objects) {</span>
+            <span class="s0">try </span><span class="s1">{</span>
+                Thread.sleep(<span class="s4">5000</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(InterruptedException e) {</span>
+                e.printStackTrace()<span class="s0">;</span>
+            <span class="s1">}</span>
+            String epoch = String.valueOf(System.currentTimeMillis())<span class="s0">;</span>
+            return <span class="s1">epoch</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        @Override
+        <span class="s0">protected void </span><span class="s1">onPostExecute(Object o) {</span>
+            <span class="s0">super</span><span class="s1">.onPostExecute(o)</span><span class="s0">;</span>
+            <span class="s1">tvResult.setText((String) o)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    }
+}
+</pre>
+</body>
+</html>
